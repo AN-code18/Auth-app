@@ -1,20 +1,18 @@
-import UserModel from '../model/User.model.js'
+import UserModel from '../model/User.model.js';
 import bcrypt from 'bcrypt';
-/*import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import ENV from '../config.js'
-import otpGenerator from 'otp-generator';*/
+import otpGenerator from 'otp-generator';
 
 /** middleware for verify user */
 export async function verifyUser(req, res, next){
     try {
-        
         const { username } = req.method == "GET" ? req.query : req.body;
 
         // check the user existance
         let exist = await UserModel.findOne({ username });
         if(!exist) return res.status(404).send({ error : "Can't find User!"});
         next();
-
     } catch (error) {
         return res.status(404).send({ error: "Authentication Error"});
     }
@@ -64,10 +62,10 @@ export async function register(req, res) {
             .hash(password, 10)
             .then((hashedPassword) => {
               const user = new UserModel({
-                username,
+                username:username,
                 password: hashedPassword,
                 profile: profile || "",
-                email,
+                email:email,
               });
 
               // return save result as a response
@@ -118,6 +116,7 @@ export async function login(req, res) {
                 username: user.username,
               },
               ENV.JWT_SECRET,
+              //"secret",
               { expiresIn: "24h" }
             );
 
@@ -142,7 +141,6 @@ export async function login(req, res) {
 /** GET: http://localhost:8080/api/user/example123 */
 export async function getUser(req, res) {
   const { username } = req.params;
-
   try {
     if (!username) return res.status(501).send({ error: "Invalid Username" });
 
@@ -176,14 +174,11 @@ export async function updateUser(req, res) {
   try {
     // const id = req.query.id;
     const { userId } = req.user;
-
     if (userId) {
-      const body = req.body;
-
+      const body = req.body; // get data from body and store it inside "body " variable
       // update the data
       UserModel.updateOne({ _id: userId }, body, function (err, data) {
-        if (err) throw err;
-
+        if (error) throw error;
         return res.status(201).send({ msg: "Record Updated...!" });
       });
     } else {

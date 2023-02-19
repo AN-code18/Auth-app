@@ -25,7 +25,7 @@ app.use('/api' , router)
 
 /*start server only when we have valid connection */
 
-/*connect()
+connect()
   .then(() => {
     try {
       app.listen(port, () => {
@@ -36,10 +36,10 @@ app.use('/api' , router)
     }
   })
   .catch((error) => {
-    console.log("Invalid database connection...!");
-  }); */
-
-
-  app.listen(port , () =>{
-    console.log(`server is listening on port ${port}`)
+    console.log(error);
   });
+
+
+ /*app.listen(port , () =>{
+    console.log(`server is listening on port ${port}`)
+  });*/

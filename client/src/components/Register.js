@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { registerValidation } from '../helper/Validate';
 import convertToBase64 from '../helper/convert';
-//import { registerUser } from '../helper/helper'
+import { registerUser } from '../helper/helper'
 
 
 import styles from '../styles/Username.module.css';
@@ -26,14 +26,14 @@ export default function Register() {
     validateOnChange: false,
     onSubmit : async values => {
       values = await Object.assign(values, { profile : file || ''})
-      /*let registerPromise = registerUser(values)
+      let registerPromise = registerUser(values)
       toast.promise(registerPromise, {
         loading: 'Creating...',
         success : <b>Register Successfully...!</b>,
         error : <b>Could not Register.</b>
       });
 
-      registerPromise.then(function(){ navigate('/')});*/
+      registerPromise.then(function(){ navigate('/')});
       console.log(values);
     }
   })
